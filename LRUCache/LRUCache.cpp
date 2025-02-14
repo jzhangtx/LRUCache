@@ -47,8 +47,10 @@ public:
         if (m_Cache.contains(key))
         {
             pNode = m_Cache[key];
-            pNode->Remove();
             pNode->SetValue(value);
+            if (m_pHead->GetNext() == pNode)
+                return;
+            pNode->Remove();
         }
         else if (GetSize() == m_Capacity)
         {
@@ -76,9 +78,15 @@ public:
     {
         for (auto p = m_pHead->GetNext(); p != m_pTail; p = p->GetNext())
         {
-            std::cout << "{" << p->GetKey() << ", " << p->GetValue() << "} ";
+            std::cout << p->GetValue() << " ";
         }
-        std::cout << std::endl;
+
+        std::cout << "The map: [";
+        for (auto& m : m_Cache)
+        {
+            std::cout << "[" << m.first << ", " << m.second->GetValue() << "]";
+        }
+        std::cout << "]" << std::endl;
     }
 
 private:
